@@ -40,9 +40,11 @@ class SortableTbl extends React.Component{
 		filter(e){
 			let newData = this.props.tblData.filter((item)=>{
 				for (let key in item) {
-					let v = item[key] && item[key].toString().toLowerCase();
-					if (v && v.indexOf(e.target.value.toLowerCase()) !== -1 ) {
-						return true;
+					if(typeof item[key] === "string"){
+						let v = item[key] && item[key].toString().toLowerCase();
+						if (v && v.indexOf(e.target.value.toLowerCase()) !== -1 ) {
+							return true;
+						}	
 					}
 				}
 				return false;
@@ -86,7 +88,6 @@ class SortableTbl extends React.Component{
 			let index = parseInt(i);
 			let nCurr = this.state.pagers.curr;
 			let pagesCount = Math.ceil(this.state.data.length / index);
-			//console.log(this.state.pagers.curr, pagesCount, index);
 			if (this.state.pagers.curr >= pagesCount)
 				nCurr = pagesCount - 1;
 			this.setState(
@@ -108,34 +109,36 @@ class SortableTbl extends React.Component{
 						{ this.props.search && 
 							(
 								<div className="search-box">
-									Search: <input className="search" type="text" name="" value={this.state.filter} placeholder="Filter Result" onChange={this.filter} />
+									Busca: <input className="search" type="text" name="" value={this.state.filter} onChange={this.filter} />
 								</div>
 							)}
+						<div className={"module filtered changelist"}>
+							<table className="jsonTable" >
+								<thead>
+								<tr>								
+									{
+										this.props.dKey.map((item, id) => {
+											return (
+												<SortableTblTh key={id} sortData={this.sortData} asc={this.state.asc[item]}  dataKey={item} >
+													{this.props.tHead[parseInt(id)]}
+												</SortableTblTh>
+										);})
+									}
+								</tr>
+								</thead>
+								<tbody>
+								{
+									pageData.map( (item, id) => {
+										return <SortableTblTd key={id} index={id} tdData={item} {...this.props} dKey={this.props.dKey} customTd={this.props.customTd}/>;
+									})
+								}
+								</tbody>
+							</table>
+						</div>
 						{
 							(pagers.paging)?<SortableTblPager curr={pagers.curr} totalPage={pagesCount} setCurrentPage={this.setCurrentPage} 
 												setRowsPerPage={this.setRowsPerPage} totalsCount={this.state.data.length} rowPerPage={pagers.rowsPerPage}/>:""
-						}
-						<table className="table table-hover table-striped" >
-							<thead>
-							<tr>								
-								{
-									this.props.dKey.map((item, id) => {
-										return (
-											<SortableTblTh key={id} sortData={this.sortData} asc={this.state.asc[item]}  dataKey={item} >
-												{this.props.tHead[parseInt(id)]}
-											</SortableTblTh>
-									);})
-								}
-							</tr>
-							</thead>
-							<tbody>
-							{
-								pageData.map( (item, id) => {
-									return <SortableTblTd key={id} tdData={item} {...this.props} dKey={this.props.dKey} customTd={this.props.customTd}/>;
-								})
-							}
-							</tbody>
-						</table>						
+						}					
 					</div>
 				</div>
 			);

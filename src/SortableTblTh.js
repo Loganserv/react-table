@@ -21,7 +21,6 @@ class SortableTblTh extends React.Component{
 				a = "fa fa-sort-amount-desc";
 			break;
 		}
-		//console.log(a);
 		if (nextProps.asc !== this.props.asc) {
 			this.setState({ sortCssClass: a });
 		}
@@ -31,7 +30,7 @@ class SortableTblTh extends React.Component{
 	}
 	render() {
 		return (
-			<th onClick={this.sort}> {this.props.children} <br/><i className={this.state.sortCssClass} aria-hidden="true"/></th>
+			<th onClick={this.sort}> {this.props.children}<i className={this.state.sortCssClass} aria-hidden="true"/></th>
 		);
 	}
 }

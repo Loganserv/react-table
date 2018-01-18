@@ -1,8 +1,10 @@
 import React from 'react';
 const SortableTblTd = (props) => {
 	let CustomTd = props.customTd;
+	let oddClassName = (props.index % 2 ? "jsonOdd" : "jsonEven");
+	
 	return(
-		<tr>
+		<tr className={"jsonRow jsonRow_" + props.index + " " + oddClassName }>
 		{
 			props.dKey.map((item, id) => {
 				let CustomTdComponent = null;

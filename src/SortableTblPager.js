@@ -60,7 +60,6 @@ class SortableTblPager extends React.Component{
 		render() {			
 			let nextDisableStyle = ((this.state.currPage + 1) >= (this.props.totalPage ));
 			let prevDisableStyle = ((this.state.currPage + 1 ) <= 1);
-			let rowPerPage = this.props.totalPage===1?"All":this.props.rowPerPage;
 
 			return (
 				<div className="form-group">
@@ -75,15 +74,10 @@ class SortableTblPager extends React.Component{
 						<input type="button" className="btn btn-warning" name="" disabled={nextDisableStyle} 
 							onClick={this.addPagge} value="Next"/>
 						<label htmlFor="rowsPerPage" className="SortableTblLabel">, display </label>
-						<select id="rowsPerPage" onChange={this.setRowsPerPage} value={rowPerPage} className="form-control page-select">
-							{
-								[5, 10, 20 ,50, 'All'].map((item,id) => {return (<option key={id} value={item}>{item}</option>);})
-							}		
-						</select>
 						<label  className="SortableTblLabel">rows per page</label>
 					</div>
 					<div className="desc col-sm-5 col-xs-12">
-						<div>Page {this.state.currPage + 1} of totlas {this.props.totalPage}, totlas {this.props.totalsCount} rows</div>
+						<div>Página {this.state.currPage + 1} de {this.props.totalPage}</div>
 					</div>
 				</div>
 			);
